@@ -1,40 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- National Parks Schema  which tells us what tags are allowed, what order they should come in, and which attributes they must have vs optional (I looked at the Figure 1 for specifications on the Assignment 4 doc)-->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+   xmlns="https://arveen-aziz.github.io/CSE445-Project4"
+   targetNamespace="https://arveen-aziz.github.io/CSE445-Project4"
+   elementFormDefault="qualified" attributeFormDefault="unqualified">
+
   <!-- The first rule is that the outermost tag has to be "NationalParks"-->  
-  <xs:element name="NationalParks">
-    <xs:complexType>
-      <xs:sequence>
-        <!-- The second rule is that inside the NationalParks tag, we can have as much <NationalPark> elements as we want -->
-        <xs:element name="NationalPark" maxOccurs="unbounded">
-          <xs:complexType>
-            <xs:sequence>
-              <!--Inside the NationalPark tag we have one name which would be a string-->
-              <xs:element name="Name" type="xs:string"/>
-              <!--Inside the NationalPark tag we also have one or more phone numbers which would also be a string-->
-              <xs:element name="Phone" type="xs:string" maxOccurs="unbounded"/>
-              <!--Inside the NationalPark tag we also have one address which has its own tags inside of it (Number, Street, City, State, Zip in this order)-->
-              <xs:element name="Address">
-                <xs:complexType>
-                    <xs:sequence>
-                      <xs:element name="Number" type="xs:int"/>
-                      <xs:element name="Street" type="xs:string"/>
-                      <xs:element name="City" type="xs:string"/>
-                      <xs:element name="State" type="xs:string"/>
-                      <xs:element name="Zip" type="xs:string"/>
-                    </xs:sequence>
+  <xsd:element name="NationalParks" type="NationalParksType"/>
 
-                    <!-- Also, each address tag will have a NearestAirport attribute -->
-                    <xs:attribute name="NearestAirport" type="xs:string" use="required"/>
-                </xs:complexType>
-              </xs:element>
-            </xs:sequence>
-            <!-- Each NationalPark tag may also have a Rating attribute which is optional and it is stored as a decimal number-->
-            <xs:attribute name="Rating" type="xs:decimal" use="optional"/>
+  <xsd:complexType name="NationalParksType">
+    <xsd:sequence>
+      <!-- The second rule is that inside the NationalParks tag, we can have as much <NationalPark> elements as we want -->
+      <xsd:element name="NationalPark" type="NationalParkDetails" minOccurs="1" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
 
-          </xs:complexType>
-        </xs:element>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-</xs:schema>
+  <xsd:complexType name="NationalParkDetails">
+    <xsd:sequence>
+      <!--Inside the NationalPark tag we have one name which would be a string-->
+      <xsd:element name="Name" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+      <!--Inside the NationalPark tag we also have one or more phone numbers which would also be a string-->
+      <xsd:element name="Phone" type="xsd:string" minOccurs="1" maxOccurs="unbounded"/>
+      <!--Inside the NationalPark tag we also have one address which has its own tags inside of it (Number, Street, City, State, Zip in this order)-->
+      <xsd:element name="Address" type="AddressType" minOccurs="1" maxOccurs="1"/>
+    </xsd:sequence>
+    <!-- Each NationalPark tag may also have a Rating attribute which is optional and it is stored as a decimal number-->
+    <xsd:attribute name="Rating" type="xsd:decimal" use="optional"/>
+  </xsd:complexType>
+
+  <xsd:complexType name="AddressType">
+    <xsd:sequence>
+      <xsd:element name="Number" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="Street" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="City" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="State" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+      <xsd:element name="Zip" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+    </xsd:sequence>
+
+    <!-- Also, each address tag will have a NearestAirport attribute -->
+    <xsd:attribute name="NearestAirport" type="xsd:string" use="required"/>
+  </xsd:complexType>
+</xsd:schema>
