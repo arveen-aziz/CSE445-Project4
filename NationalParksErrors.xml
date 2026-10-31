@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!-- Error 1: root element is NationalPark instead of NationalParks -->
-<NationalPark>
+<NationalPark
+   xmlns="https://arveen-aziz.github.io/CSE445-Project4"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="https://arveen-aziz.github.io/CSE445-Project4 https://arveen-aziz.github.io/CSE445-Project4/NationalParks.xsd">
 
   <NationalPark Rating="4.9">
     <Name>Grand Canyon</Name>
